@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pastel Gradient Quote Generator</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #540D6E, #7A3C89);
+            transition: background 1.4s ease;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+        }
+
+        /* QUOTE BOX */
+        .quote-box {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 20px;
+            backdrop-filter: blur(14px);
+            color: #2c2c2c;
+            font-size: 1.3rem;
+            min-height: 120px;
+            transition: 0.5s ease;
+
+            /* soft glow */
+            border: 2px solid rgba(255,255,255,0.45);
+            box-shadow: 0 0 25px rgba(255,255,255,0.35);
+        }
+
+        /* BUTTON */
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.45);
+            color: #333;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255,255,255,0.75);
+        }
+
+        /* Smooth quote animations */
+        .fade { animation: fade 0.6s ease; }
+        @keyframes fade { from {opacity: 0;} to {opacity: 1;} }
+
+        .slide-up { animation: slideUp 0.6s ease; }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0;}
+            to   { transform: translateY(0); opacity: 1;}
+        }
+
+        .zoom { animation: zoom 0.5s ease; }
+        @keyframes zoom {
+            from { transform: scale(0.85); opacity: 0;}
+            to   { transform: scale(1); opacity: 1;}
+        }
+
+        .pop { animation: pop 0.35s ease; }
+        @keyframes pop {
+            from { transform: scale(0.6); opacity: 0;}
+            to   { transform: scale(1); opacity: 1;}
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div id="quoteBox" class="quote-box">
+            Tap below for a pastel quote 🌸
+        </div>
+
+        <button id="newQuoteBtn">New Quote ✨</button>
+    </div>
+
+    <script>
+        const quotes = [
+            "🌸 You are gentler than you think.",
+            "💖 Soft hearts shine brightest.",
+            "🌿 Growth happens quietly.",
+            "✨ You’re made of calm magic.",
+            "💗 Little steps still matter.",
+            "🌈 You glow in your own way.",
+            "🦋 Evolve beautifully.",
+            "💛 You deserve softness.",
+            "🌙 Breathe, you're doing great.",
+            "🍃 Peace looks good on you."
+        ];
+
+        /* YOUR TWO PALETTES (purple + pink pastel) */
+        const gradients = [
+            // Purple Palette
+            "linear-gradient(135deg, #540D6E, #7A3C89, #8C5B9B, #A887B8, #C8AFD1)",
+            "linear-gradient(135deg, #7A3C89, #A887B8, #C8AFD1)",
+            "linear-gradient(135deg, #540D6E, #8C5B9B)",
+
+            // Pink Palette
+            "linear-gradient(135deg, #EE4266, #F46C82, #F58AA0, #F8B8C9, #FFD6DF)",
+            "linear-gradient(135deg, #EE4266, #F58AA0)",
+            "linear-gradient(135deg, #F46C82, #FFD6DF)"
+        ];
+
+        const animations = ["fade", "slide-up", "zoom", "pop"];
+
+        const quoteBox = document.getElementById("quoteBox");
+        const newQuoteBtn = document.getElementById("newQuoteBtn");
+
+        // Auto background transition every 4 seconds
+        setInterval(() => {
+            const randomBG = gradients[Math.floor(Math.random() * gradients.length)];
+            document.body.style.background = randomBG;
+        }, 4000);
+
+        newQuoteBtn.addEventListener("click", () => {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+            const randomBG = gradients[Math.floor(Math.random() * gradients.length)];
+
+            // Update background
+            document.body.style.background = randomBG;
+
+            // Trigger animation
+            quoteBox.className = "quote-box";
+            void quoteBox.offsetWidth;
+            quoteBox.classList.add(randomAnimation);
+
+            // Update quote text
+            quoteBox.textContent = randomQuote;
+        });
+    </script>
+
+</body>
+</html>
