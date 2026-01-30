@@ -3,149 +3,126 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pastel Gradient Quote Generator</title>
+    <title>Quote Generator</title>
+
+    <!-- Elegant Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
-            padding: 0;
-            font-family: "Poppins", sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #540D6E, #7A3C89);
-            transition: background 1.4s ease;
+            font-family: "Inter", sans-serif;
+            overflow: hidden;
+
+            /* Your background image (sharp & clear) */
+            background: url("background.jpeg") no-repeat center/cover;
+            background-attachment: fixed;
         }
 
-        .container {
-            text-align: center;
-            width: 90%;
-            max-width: 420px;
+        /* Soft subtle overlay (NOT blurry anymore) */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.20); /* slight mist, keeps bg clear */
+            z-index: -1;
         }
 
-        /* QUOTE BOX */
-        .quote-box {
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.35);
+        /* Quote Card */
+        .card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 30px 36px;
             border-radius: 20px;
-            backdrop-filter: blur(14px);
-            color: #2c2c2c;
-            font-size: 1.3rem;
-            min-height: 120px;
-            transition: 0.5s ease;
-
-            /* soft glow */
-            border: 2px solid rgba(255,255,255,0.45);
-            box-shadow: 0 0 25px rgba(255,255,255,0.35);
+            width: 90%;
+            max-width: 520px;
+            text-align: center;
+            box-shadow: 0px 8px 20px rgba(90, 90, 90, 0.15);
         }
 
-        /* BUTTON */
+        /* Beautiful pastel quote color */
+        #quote {
+            color: #4d4d4d; /* deep soft gray */
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* POP animation */
+        .pop {
+            animation: popEffect 0.45s ease-out;
+        }
+        @keyframes popEffect {
+            0% { transform: scale(0.85); opacity: 0; }
+            60% { transform: scale(1.07); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Aesthetic Button */
         button {
             margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 1rem;
+            padding: 12px 26px;
+            background: #e7e2ff; /* soft lavender */
             border: none;
             border-radius: 12px;
-            cursor: pointer;
-            background: rgba(255,255,255,0.45);
-            color: #333;
+            color: #4d4d4d;
             font-weight: 600;
-            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 15px;
             transition: 0.3s ease;
+            box-shadow: 0 4px 10px rgba(120, 120, 120, 0.15);
         }
         button:hover {
-            background: rgba(255,255,255,0.75);
-        }
-
-        /* Smooth quote animations */
-        .fade { animation: fade 0.6s ease; }
-        @keyframes fade { from {opacity: 0;} to {opacity: 1;} }
-
-        .slide-up { animation: slideUp 0.6s ease; }
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0;}
-            to   { transform: translateY(0); opacity: 1;}
-        }
-
-        .zoom { animation: zoom 0.5s ease; }
-        @keyframes zoom {
-            from { transform: scale(0.85); opacity: 0;}
-            to   { transform: scale(1); opacity: 1;}
-        }
-
-        .pop { animation: pop 0.35s ease; }
-        @keyframes pop {
-            from { transform: scale(0.6); opacity: 0;}
-            to   { transform: scale(1); opacity: 1;}
+            background: #dcd4ff;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <div id="quoteBox" class="quote-box">
-            Tap below for a pastel quote 🌸
-        </div>
+    <div class="overlay"></div>
 
-        <button id="newQuoteBtn">New Quote ✨</button>
+    <div class="card">
+        <h2 id="quote" class="pop">Loading quote...</h2>
+        <button onclick="newQuote()">New Quote</button>
     </div>
 
     <script>
         const quotes = [
-            "🌸 You are gentler than you think.",
-            "💖 Soft hearts shine brightest.",
-            "🌿 Growth happens quietly.",
-            "✨ You’re made of calm magic.",
-            "💗 Little steps still matter.",
-            "🌈 You glow in your own way.",
-            "🦋 Evolve beautifully.",
-            "💛 You deserve softness.",
-            "🌙 Breathe, you're doing great.",
-            "🍃 Peace looks good on you."
+            "Breathe. Everything is unfolding as it should.",
+            "Small progress is still progress — just keep going.",
+            "You deserve calm mornings and peaceful nights.",
+            "One gentle step at a time.",
+            "Trust yourself — you’re doing better than you think.",
+            "Let today be soft but productive.",
+            "Your future self will thank you for not giving up.",
+            "Even slow growth is still growth.",
+            "You are becoming someone you can be proud of.",
+            "Peace begins when you choose it.",
+            "Rest is also part of the process.",
+            "You are allowed to start again.",
+            "Some things take time — that’s okay.",
+            "The best things grow quietly.",
+            "You are capable, even on the quiet days."
         ];
 
-        /* YOUR TWO PALETTES (purple + pink pastel) */
-        const gradients = [
-            // Purple Palette
-            "linear-gradient(135deg, #540D6E, #7A3C89, #8C5B9B, #A887B8, #C8AFD1)",
-            "linear-gradient(135deg, #7A3C89, #A887B8, #C8AFD1)",
-            "linear-gradient(135deg, #540D6E, #8C5B9B)",
+        const quoteText = document.getElementById("quote");
 
-            // Pink Palette
-            "linear-gradient(135deg, #EE4266, #F46C82, #F58AA0, #F8B8C9, #FFD6DF)",
-            "linear-gradient(135deg, #EE4266, #F58AA0)",
-            "linear-gradient(135deg, #F46C82, #FFD6DF)"
-        ];
+        function newQuote() {
+            quoteText.classList.remove("pop");
 
-        const animations = ["fade", "slide-up", "zoom", "pop"];
+            setTimeout(() => {
+                const index = Math.floor(Math.random() * quotes.length);
+                quoteText.textContent = quotes[index];
+                quoteText.classList.add("pop");
+            }, 50);
+        }
 
-        const quoteBox = document.getElementById("quoteBox");
-        const newQuoteBtn = document.getElementById("newQuoteBtn");
-
-        // Auto background transition every 4 seconds
-        setInterval(() => {
-            const randomBG = gradients[Math.floor(Math.random() * gradients.length)];
-            document.body.style.background = randomBG;
-        }, 4000);
-
-        newQuoteBtn.addEventListener("click", () => {
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-            const randomBG = gradients[Math.floor(Math.random() * gradients.length)];
-
-            // Update background
-            document.body.style.background = randomBG;
-
-            // Trigger animation
-            quoteBox.className = "quote-box";
-            void quoteBox.offsetWidth;
-            quoteBox.classList.add(randomAnimation);
-
-            // Update quote text
-            quoteBox.textContent = randomQuote;
-        });
+        newQuote();
     </script>
 
 </body>
