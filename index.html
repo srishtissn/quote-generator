@@ -18,16 +18,16 @@
             font-family: "Inter", sans-serif;
             overflow: hidden;
 
-            /* Your background image (sharp & clear) */
-            background: url("background.jpeg") no-repeat center/cover;
+            /* Vercel-ready background (comes from /public) */
+            background: url("/background.jpeg") no-repeat center/cover;
             background-attachment: fixed;
         }
 
-        /* Soft subtle overlay (NOT blurry anymore) */
+        /* Soft subtle overlay (not blurry) */
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.20); /* slight mist, keeps bg clear */
+            background: rgba(255, 255, 255, 0.20);
             z-index: -1;
         }
 
@@ -45,7 +45,7 @@
 
         /* Beautiful pastel quote color */
         #quote {
-            color: #4d4d4d; /* deep soft gray */
+            color: #4d4d4d;
             font-size: 1.4rem;
             line-height: 1.6;
             font-weight: 500;
@@ -65,7 +65,7 @@
         button {
             margin-top: 20px;
             padding: 12px 26px;
-            background: #e7e2ff; /* soft lavender */
+            background: #e7e2ff;
             border: none;
             border-radius: 12px;
             color: #4d4d4d;
